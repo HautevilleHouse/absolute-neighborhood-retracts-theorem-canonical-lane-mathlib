@@ -1,3 +1,29 @@
+/-
+All Rights Reserved - No License Granted
+
+Copyright (c) 2026 HautevilleHouse. All rights reserved.
+
+This repository is published for academic review, citation, priority, public
+notice, and research-reference purposes only.
+
+No license is granted to use, copy, reproduce, redistribute, modify, merge,
+publish, distribute, sublicense, sell, fork, mirror, scrape, use for training or
+fine-tuning, include in a dataset or benchmark, use to create, evaluate, or
+benchmark a derivative system, incorporate into another system, or create
+derivative works from this repository or any substantial portion of it without
+prior written permission from the rights holder.
+
+Viewing this repository on GitHub for academic review and citation is permitted
+with all rights reserved by the rights holder.
+
+Any discussion, review, comparison, implementation, derivative research use, or
+public reference to this repository must cite the repository and preserve this
+notice.
+
+Unauthorized reproduction or redistribution of this repository, including public
+GitHub forks containing the repository contents, constitutes copyright
+infringement and may be subject to DMCA.
+-/
 import Mathlib.Data.Set.Basic
 
 /-!
@@ -64,7 +90,8 @@ def theoremSpecificObject : String := "AbsoluteNeighborhoodRetractsTheorem"
 /-- The classical boundary is always carried in this classical interpretation. -/
 def ClassicalSourceBoundaryCarried : Prop := True
 
-theorem classical_source_boundary_carried_checked : ClassicalSourceBoundaryCarried := trivial
+theorem classical_source_boundary_carried_checked : ClassicalSourceBoundaryCarried := by
+  simp [ClassicalSourceBoundaryCarried]
 
 /-- Certificate for an absolute neighborhood retract. -/
 structure ANRCertificate where
@@ -96,12 +123,13 @@ def anrCertificate : ANRCertificate := {
 }
 
 theorem anr_retraction_checked : RetractionLayerClosed anrCertificate := by
-  trivial
+  simp [RetractionLayerClosed, anrCertificate]
 
 theorem anr_neighborhood_checked : NeighborhoodRetractEndpointClosed anrCertificate := by
-  trivial
+  simp [NeighborhoodRetractEndpointClosed, anrCertificate]
 
 theorem anr_certificate_closed_checked : ANRCertificateClosed anrCertificate := by
+  unfold ANRCertificateClosed
   constructor
   · exact anr_retraction_checked
   · exact anr_neighborhood_checked
@@ -146,6 +174,7 @@ def ANRClassicalBoundaryCarried : Prop :=
   ClassicalSourceBoundaryCarried ∧ anrCertificate.classicalBoundaryCarried = true
 
 theorem anr_admitted_closure_checked : ANRAdmittedClosure := by
+  unfold ANRAdmittedClosure ConstrainedTheoremClosure
   exact anrAdmissibleClass.gateWitness
 
 theorem anr_classical_boundary_carried_checked : ANRClassicalBoundaryCarried := by

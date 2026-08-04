@@ -1,3 +1,29 @@
+/-
+All Rights Reserved - No License Granted
+
+Copyright (c) 2026 HautevilleHouse. All rights reserved.
+
+This repository is published for academic review, citation, priority, public
+notice, and research-reference purposes only.
+
+No license is granted to use, copy, reproduce, redistribute, modify, merge,
+publish, distribute, sublicense, sell, fork, mirror, scrape, use for training or
+fine-tuning, include in a dataset or benchmark, use to create, evaluate, or
+benchmark a derivative system, incorporate into another system, or create
+derivative works from this repository or any substantial portion of it without
+prior written permission from the rights holder.
+
+Viewing this repository on GitHub for academic review and citation is permitted
+with all rights reserved by the rights holder.
+
+Any discussion, review, comparison, implementation, derivative research use, or
+public reference to this repository must cite the repository and preserve this
+notice.
+
+Unauthorized reproduction or redistribution of this repository, including public
+GitHub forks containing the repository contents, constitutes copyright
+infringement and may be subject to DMCA.
+-/
 import Mathlib.Topology.Basic
 import Mathlib.Topology.Constructions
 
@@ -70,13 +96,13 @@ def ANRRetractionProperty (X Y : Type*) [TopologicalSpace X] [TopologicalSpace Y
   True
 
 theorem anr_bridge_retraction : ANRRetractionProperty Unit Unit (fun _ => ()) := by
-  trivial
+  simp [ANRRetractionProperty]
 
 -- A theorem stating that the bridge is compatible with the certificate.
 theorem bridge_compatible_with_certificate :
     ANRRetractionProperty Unit Unit (fun _ => ()) ∧
     selfAdjointOperatorLayerCertificate.sourceConstantsInternalized := by
-  exact And.intro (by trivial) rfl
+  constructor <;> simp [ANRRetractionProperty, selfAdjointOperatorLayerCertificate]
 
 end AbsoluteNeighborhoodRetractsTheoremCanonicalLaneLean
 end HautevilleHouse

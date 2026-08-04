@@ -1,3 +1,29 @@
+/-
+All Rights Reserved - No License Granted
+
+Copyright (c) 2026 HautevilleHouse. All rights reserved.
+
+This repository is published for academic review, citation, priority, public
+notice, and research-reference purposes only.
+
+No license is granted to use, copy, reproduce, redistribute, modify, merge,
+publish, distribute, sublicense, sell, fork, mirror, scrape, use for training or
+fine-tuning, include in a dataset or benchmark, use to create, evaluate, or
+benchmark a derivative system, incorporate into another system, or create
+derivative works from this repository or any substantial portion of it without
+prior written permission from the rights holder.
+
+Viewing this repository on GitHub for academic review and citation is permitted
+with all rights reserved by the rights holder.
+
+Any discussion, review, comparison, implementation, derivative research use, or
+public reference to this repository must cite the repository and preserve this
+notice.
+
+Unauthorized reproduction or redistribution of this repository, including public
+GitHub forks containing the repository contents, constitutes copyright
+infringement and may be subject to DMCA.
+-/
 -- This module is the root of the AbsoluteNeighborhoodRetractsTheoremCanonicalLaneLean Lean proof package.
 -- It encodes the admissible-class bridge for the Absolute Neighborhood Retracts Theorem.
 
@@ -72,7 +98,17 @@ theorem anr_of_retract
     (g : X → Y) (hg : Continuous g) (hgf : ∀ y : Y, g (f y) = y)
     (hX : AbsoluteNeighborhoodRetract X) :
     AbsoluteNeighborhoodRetract Y := by
-  sorry
+  constructor
+  intro Z _ A hA h hcont
+  have hXmap : A → X := fun x => f (h x)
+  have hXcont : Continuous hXmap := hf.continuous.comp hcont
+  rcases hX.ane (Z := Z) A hA hXmap hXcont with ⟨U, hU, hAU, gX, hgXcont, hgX_ext⟩
+  refine ⟨U, hU, hAU, fun z => g (gX z), ?_, ?_⟩
+  · exact hg.comp hgXcont
+  · intro x
+    calc
+      g (gX ⟨x.1, hAU x.2⟩) = g (f (h x)) := congrArg g (hgX_ext x)
+      _ = h x := hgf (h x)
 
 /-- Spaces that are either CW complexes or compact metric locally contractible are admissible. -/
 theorem anr_of_admissible
